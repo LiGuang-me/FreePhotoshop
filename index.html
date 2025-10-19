@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- 页面标题 - 显示在浏览器标签页 -->
+	<title>Free Online Photoshop | FreePhotoshop</title>
+	
+	<!-- 基础 Meta 标签 -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="x-ua-compatible" content="IE=edge" /> <!-- IE 兼容性设置 -->
+	
+	<!-- SEO 优化标签 -->
+	<meta name="description" content="Online image editor, an open-source online image editor developed using HTML5+Vue technology, features functions such as image editing, brushes, filters, resizing, text, zooming, layers, and screenshots. This editor mimics most of the functions of Photoshop..." />
+	<meta name="keywords"
+		content="Photo, Photopea, Image, Picture, Transparent, Layer, Free, Edit, html5, Canvas, javascript, online, photoshop, gimp, Effects, Sharpen, Blur, Magic Eraser Tool, Clone Tool, Rotate, Resize, photoshop- Online, Online Tools, Tilt Offset, Sprite, Key point" />
+	
+	<!-- 响应式设计 - 移动端适配 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5.0, user-scalable=yes" />
+	
+	<!-- 网站图标 -->
+	<link rel="icon" sizes="192x192" href="images/favicon.png">
+	<!-- PWA 清单文件 (已注释) -->
+	<!-- <link rel="manifest" href="dist/manifest.json"> -->
+
+	<!-- 搜索引擎优化 -->
+	<link rel="canonical" href="https://freephotoshop.netlify.app">
+	
+	<!-- Google 结构化数据 -->
+	<meta itemprop="name" content="Online Photoshop Free Tool" />
+	<meta itemprop="description" content="Online Photoshop is a Free online photo editor using HTML5. Edit, adjust, and add effects online in your browser without installing anything..." />
+	
+	<!-- Twitter 卡片标签 - 社交媒体分享优化 -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Online Photoshop Free Tool" />
+	<meta name="twitter:description" content="Online Photoshop is a Free Cool online photo editor using HTML5..." />
+	
+	<!-- Open Graph 标签 - Facebook, Pinterest 等社交平台分享优化 -->
+	<meta property="og:title" content="Online Photoshop Free Tool" />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content="https://freephotoshop.netlify.app" />
+	<meta property="og:description" content="Online Photoshop is a Free Cool online photo editor using HTML5..." />
+	<meta property="og:site_name" content="Online Photoshop Free Tool" />
+
+	<!-- 主要应用程序脚本 - 异步加载以提高页面性能 -->
+	<script src="dist/bundle.js" async></script>
+
+</head>
+
+<body>
+	<!-- 主应用容器 -->
+	<div class="wrapper">
+
+		<!-- 顶部主菜单导航栏 - 包含文件、编辑、图像等菜单项 -->
+		<nav aria-label="Main Menu" class="main_menu" id="main_menu"></nav>
+
+		<!-- 子菜单栏 - 包含 Logo、工具属性和撤销按钮 -->
+		<div class="submenu">
+			<!-- 应用程序 Logo -->
+			<a class="logo" href="#">FreePhotoshop</a>
+			<!-- 当前选中工具的属性设置区域 -->
+			<div class="block attributes" id="action_attributes"></div>
+			<!-- 撤销操作按钮 -->
+			<button class="undo_button" id="undo_button" type="button">
+				<span class="sr_only">Undo</span>
+			</button>
+		</div>
+
+		<!-- 左侧工具栏 - 包含画笔、选择、形状等工具 -->
+		<div class="sidebar_left" id="tools_container"></div>
+
+		<!-- 中央画布区域 -->
+		<div class="middle_area" id="middle_area">
+
+			<!-- 标尺 - 左侧垂直标尺 -->
+			<canvas class="ruler_left" id="ruler_left"></canvas>
+			<!-- 标尺 - 顶部水平标尺 -->
+			<canvas class="ruler_top" id="ruler_top"></canvas>
+
+			<!-- 主画布包装器 -->
+			<div class="main_wrapper" id="main_wrapper">
+				<div class="canvas_wrapper" id="canvas_wrapper">
+					<!-- 鼠标指针跟踪元素 -->
+					<div id="mouse"></div>
+					<!-- 透明背景网格 - 显示透明区域 -->
+					<div class="transparent-grid" id="canvas_minipaint_background"></div>
+					<!-- 主画布 - 所有图像编辑操作都在这里进行 -->
+					<canvas id="canvas_minipaint">
+						<!-- 不支持 Canvas 时的错误提示 -->
+						<div class="trn error">
+							Your browser does not support canvas or JavaScript is not enabled.
+						</div>
+					</canvas>
+				</div>
+			</div>
+		</div>
+
+		<!-- 右侧面板 - 包含预览、颜色、信息、图层等 -->
+		<div class="sidebar_right">
+			<!-- 预览面板 - 显示图像缩略图预览 -->
+			<div class="preview block">
+				<h2 class="trn toggle" data-target="toggle_preview">Preview</h2>
+				<div id="toggle_preview"></div>
+			</div>
+
+			<!-- 颜色面板 - 颜色选择器和调色板 -->
+			<div class="colors block">
+				<h2 class="trn toggle" data-target="toggle_colors">Colors</h2>
+				<div class="content" id="toggle_colors"></div>
+			</div>
+
+			<!-- 信息面板 - 显示图像和选区信息 -->
+			<div class="block" id="info_base">
+				<h2 class="trn toggle toggle-full" data-target="toggle_info">Information</h2>
+				<div class="content" id="toggle_info"></div>
+			</div>
+
+			<!-- 图层详情面板 - 显示当前图层的详细属性 -->
+			<div class="details block" id="details_base">
+				<h2 class="trn toggle toggle-full" data-target="toggle_details">Layer details</h2>
+				<div class="content details-content" id="toggle_details"></div>
+			</div>
+
+			<!-- 图层面板 - 图层管理和操作 -->
+			<div class="layers block">
+				<h2 class="trn">Layers</h2>
+				<div class="content" id="layers_base"></div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 移动端菜单按钮 - 响应式设计 -->
+	<div class="mobile_menu">
+		<!-- 左侧菜单切换按钮 -->
+		<button class="left_mobile_menu" id="left_mobile_menu_button" type="button">
+			<span class="sr_only">Toggle Menu</span>
+		</button>
+		<!-- 右侧菜单切换按钮 -->
+		<button class="right_mobile_menu" id="mobile_menu_button" type="button">
+			<span class="sr_only">Toggle Menu</span>
+		</button>
+	</div>
+	
+	<!-- 隐藏的临时容器 - 用于临时存储 DOM 元素 -->
+	<div class="hidden" id="tmp"></div>
+	<!-- 弹窗容器 - 所有对话框和弹窗都会在这里显示 -->
+	<div id="popups"></div>
+</body>
+
+</html>
