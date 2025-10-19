@@ -84,3 +84,18 @@ FreePhotoshop/
 ## 许可证
 
 MIT License
+
+## GitHub Pages 部署
+
+本项目已设置 GitHub Pages 部署。要访问在线版本：
+
+1. 访问 GitHub 仓库设置页面
+2. 在侧边栏中找到 "Pages" 选项
+3. 在 "Build and deployment" 部分，选择部署源为 "Deploy from a branch"
+4. 选择分支为 "gh-pages"，目录为 "/ (root)"
+5. 点击 "Save" 保存设置
+
+部署完成后，您可以通过以下 URL 访问项目：
+`https://[username].github.io/FreePhotoshop/`
+
+其中 `[username]` 替换为您的 GitHub 用户名。
